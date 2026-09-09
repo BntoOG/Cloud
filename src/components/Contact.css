@@ -1,0 +1,110 @@
+.contact-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1.8rem;
+  align-items: start;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+/* Layout centralizado (somente LinkedIn, sem formulário) */
+.contact-info--center {
+  max-width: 520px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.contact-info--center .contact-info-text {
+  margin-bottom: 1.4rem;
+}
+
+.contact-info--center .contact-link {
+  text-align: left;
+}
+
+.contact-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-info-text {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.contact-links {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition), border-color var(--transition),
+    background var(--transition);
+}
+
+.contact-link:hover {
+  transform: translateX(4px);
+  border-color: var(--brand-500);
+  background: var(--surface-strong);
+}
+
+.contact-link-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  color: var(--brand-500);
+  background: var(--gradient-soft);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.contact-link-body {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+}
+
+.contact-link-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.contact-link-handle {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+}
+
+.contact-link-arrow {
+  margin-left: auto;
+  color: var(--text-soft);
+  transition: transform var(--transition), color var(--transition);
+}
+
+.contact-link:hover .contact-link-arrow {
+  color: var(--brand-500);
+  transform: translateX(3px);
+}
+
+/* Botão principal de contato (LinkedIn) */
+.contact-cta {
+  margin-top: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 780px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
