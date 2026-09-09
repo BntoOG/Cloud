@@ -4,14 +4,14 @@
   z-index: 9999;
   display: grid;
   place-items: center;
-  background: var(--bg);
+  background: #05070d;
   cursor: pointer;
   opacity: 1;
-  transition: opacity 0.65s ease, transform 0.65s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease;
   overflow: hidden;
 }
 
-/* Brilho sutil de fundo (eco do tema galáxia) */
+/* Brilho verde sutil de fundo (eco do terminal) */
 .intro::before {
   content: '';
   position: absolute;
@@ -19,8 +19,8 @@
   height: 90vmax;
   background: radial-gradient(
     circle,
-    rgba(99, 102, 241, 0.18),
-    rgba(168, 85, 247, 0.08) 40%,
+    rgba(34, 197, 94, 0.14),
+    rgba(16, 185, 129, 0.06) 40%,
     transparent 70%
   );
   animation: intro-glow 2.4s ease-in-out infinite alternate;
@@ -33,115 +33,124 @@
   pointer-events: none;
 }
 
-.intro-inner {
+/* ===== Janela do terminal (CMD) ===== */
+.term {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  text-align: center;
-  padding: 1.5rem;
+  width: min(680px, 92vw);
+  max-height: 78vh;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0a0f0a;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(34, 197, 94, 0.08) inset,
+    0 0 60px -20px rgba(34, 197, 94, 0.35);
+  animation: term-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.intro-logo {
-  display: grid;
-  place-items: center;
-  width: 96px;
-  height: 96px;
-  margin-bottom: 0.6rem;
-  border-radius: 26px;
-  font-size: 2.4rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  color: #fff;
-  background: var(--gradient-brand);
-  box-shadow: 0 20px 50px -18px rgba(99, 102, 241, 0.9);
-  animation: intro-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.intro-name {
-  font-size: clamp(1.5rem, 5vw, 2.4rem);
-  font-weight: 800;
-  animation: intro-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: 0.18s;
-}
-
-/* ===== Cena da cobrinha perseguindo a maçã ===== */
-.snake-scene {
-  position: relative;
-  width: 116px;
-  height: 116px;
-  margin-top: 1.1rem;
-  animation: intro-up 0.6s ease both;
-  animation-delay: 0.36s;
-}
-
-/* Grupo que gira: leva cobra + maçã em órbita (a cobra "persegue") */
-.snake-orbit {
+/* Efeito sutil de scanlines de monitor antigo */
+.term::after {
+  content: '';
   position: absolute;
   inset: 0;
-  animation: snake-orbit 1.5s linear infinite;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.5;
 }
 
-.snake-orbit .apple,
-.snake-orbit .seg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  background: #11161a;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.term-dot {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
+  flex: none;
+}
+.term-dot.red { background: #ff5f56; }
+.term-dot.yellow { background: #ffbd2e; }
+.term-dot.green { background: #27c93f; }
+
+.term-title {
+  margin-left: 0.5rem;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-family: 'Cascadia Code', 'Consolas', ui-monospace, 'SF Mono', Menlo, monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Maçã (círculo vermelho + folha) */
-.apple {
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(circle at 35% 30%, #ff7a7a, #e11d48 70%);
-  transform: translate(-50%, -50%) rotate(0deg) translateY(-44px);
-  box-shadow: 0 0 10px rgba(225, 29, 72, 0.5);
-}
-.apple::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  width: 7px;
-  height: 7px;
-  background: #22c55e;
-  border-radius: 0 100% 0 100%;
-  transform: translateX(-50%) rotate(20deg);
+.term-body {
+  padding: 1rem 1.1rem 1.2rem;
+  font-family: 'Cascadia Code', 'Consolas', ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: clamp(0.82rem, 2.4vw, 0.98rem);
+  line-height: 1.65;
+  color: #22c55e;
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.45);
+  min-height: 42vh;
+  overflow: hidden;
 }
 
-/* Segmentos da cobra (verde), com tamanho decrescente atrás da cabeça */
-.seg {
-  background: linear-gradient(135deg, #34d399, #10b981);
+.term-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  animation: line-in 0.18s ease both;
 }
-.head {
-  width: 17px;
-  height: 17px;
-  background: linear-gradient(135deg, #6ee7b7, #10b981);
-  transform: translate(-50%, -50%) rotate(-30deg) translateY(-44px);
-  z-index: 2;
-}
-/* Olhinho da cabeça */
-.head::after {
-  content: '';
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  width: 3px;
-  height: 3px;
-  background: #0b1020;
-  border-radius: 50%;
-}
-.s1 { width: 14px; height: 14px; transform: translate(-50%, -50%) rotate(-54deg) translateY(-44px); }
-.s2 { width: 12px; height: 12px; transform: translate(-50%, -50%) rotate(-76deg) translateY(-44px); opacity: 0.92; }
-.s3 { width: 10px; height: 10px; transform: translate(-50%, -50%) rotate(-96deg) translateY(-44px); opacity: 0.82; }
-.s4 { width: 8px;  height: 8px;  transform: translate(-50%, -50%) rotate(-114deg) translateY(-44px); opacity: 0.7; }
 
-@keyframes snake-orbit {
-  to {
-    transform: rotate(360deg);
-  }
+.term-prompt {
+  color: #4ade80;
+  font-weight: 700;
+}
+
+/* Comando "digitado" pelo usuário — verde mais claro */
+.term-line.cmd .term-text {
+  color: #86efac;
+}
+
+/* Tag [ OK ] destacada */
+.term-tag {
+  color: #bbf7d0;
+  font-weight: 700;
+  flex: none;
+}
+
+.term-line.info .term-text {
+  color: #4ade80;
+  opacity: 0.85;
+}
+
+/* Linha final de conclusão */
+.term-line.done .term-text {
+  color: #bbf7d0;
+  font-weight: 700;
+}
+
+/* Cursor de bloco piscando */
+.term-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.05em;
+  margin-left: 0.15em;
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+  transform: translateY(0.15em);
+  animation: term-blink 1s steps(1) infinite;
 }
 
 .intro-skip {
@@ -151,34 +160,35 @@
   transform: translateX(-50%);
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--text-soft);
+  color: #86efac;
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: color var(--transition), border-color var(--transition);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: rgba(10, 15, 10, 0.6);
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
 }
 
 .intro-skip:hover {
-  color: var(--brand-500);
-  border-color: var(--brand-500);
+  color: #05070d;
+  background: #4ade80;
+  border-color: #4ade80;
 }
 
-@keyframes intro-pop {
+@keyframes term-in {
   from {
     opacity: 0;
-    transform: scale(0.7) translateY(8px);
+    transform: translateY(12px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-@keyframes intro-up {
+@keyframes line-in {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -186,13 +196,9 @@
   }
 }
 
-@keyframes intro-load {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
+@keyframes term-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
 }
 
 @keyframes intro-glow {
@@ -214,10 +220,12 @@
     transform: none;
   }
   .intro::before,
-  .intro-logo,
-  .intro-name,
-  .snake-scene,
-  .snake-orbit {
+  .term,
+  .term-line {
     animation: none;
+  }
+  .term-cursor {
+    animation: none;
+    opacity: 1;
   }
 }
