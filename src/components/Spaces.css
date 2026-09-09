@@ -1,0 +1,110 @@
+.spaces {
+  background: radial-gradient(70% 60% at 100% 0%, var(--gradient-soft), transparent 70%);
+}
+
+.spaces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.4rem;
+}
+
+/* Card de espaço (link inteiro clicável) */
+.space-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.6rem;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.space-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-soft);
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+
+.space-card:hover,
+.space-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--brand-500);
+  box-shadow: var(--shadow-glow);
+}
+
+.space-card:hover::after,
+.space-card:focus-visible::after {
+  opacity: 1;
+}
+
+.space-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.space-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  color: #fff;
+  background: var(--gradient-brand);
+  box-shadow: 0 12px 26px -12px rgba(99, 102, 241, 0.9);
+}
+
+.space-body {
+  flex: 1;
+}
+
+.space-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.space-head h3 {
+  font-size: 1.25rem;
+}
+
+.space-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--brand-500);
+  background: var(--gradient-soft);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.space-body p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.space-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--brand-500);
+}
+
+.space-go svg {
+  transition: transform var(--transition);
+}
+
+.space-card:hover .space-go svg,
+.space-card:focus-visible .space-go svg {
+  transform: translateX(4px);
+}
