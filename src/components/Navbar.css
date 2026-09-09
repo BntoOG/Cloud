@@ -114,6 +114,38 @@
   background: var(--surface-strong);
 }
 
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 40px;
+  padding: 0 0.7rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-soft);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: transform var(--transition), border-color var(--transition),
+    background var(--transition);
+}
+
+.lang-toggle:hover {
+  transform: translateY(-1px);
+  border-color: var(--brand-500);
+  background: var(--surface-strong);
+}
+
+.lang-toggle .is-active {
+  color: var(--brand-500);
+}
+
+.lang-toggle .lang-sep {
+  color: var(--text-soft);
+  opacity: 0.6;
+}
+
 .navbar-burger {
   display: none;
   place-items: center;

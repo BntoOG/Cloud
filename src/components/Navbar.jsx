@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import { navLinks } from '../data/navigation'
 import { profile } from '../data/profile'
+import { useLanguage } from '../context/LanguageContext'
 import { useActiveSection } from '../hooks/useActiveSection'
 import Icon from './ui/Icon'
 import ThemeToggle from './ui/ThemeToggle'
+import LangToggle from './ui/LangToggle'
 import './Navbar.css'
 
-const sectionIds = navLinks.map((l) => l.id)
-
 export default function Navbar() {
+  const { t } = useLanguage()
+  const navLinks = t.nav
+  const sectionIds = navLinks.map((l) => l.id)
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const active = useActiveSection(sectionIds)
@@ -59,6 +61,7 @@ export default function Navbar() {
         </ul>
 
         <div className="navbar-actions">
+          <LangToggle />
           <ThemeToggle />
           <button
             type="button"

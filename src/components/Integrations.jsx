@@ -1,21 +1,23 @@
-import {
-  codeSnippet,
-  dataFlow,
-  integrationConcepts,
-} from '../data/integrations'
+import { codeSnippet } from '../data/integrations'
+import { useLanguage } from '../context/LanguageContext'
 import Icon from './ui/Icon'
 import Reveal from './ui/Reveal'
 import SectionHeader from './ui/SectionHeader'
 import './Integrations.css'
 
 export default function Integrations() {
+  const { t } = useLanguage()
+  const int = t.integrations
+  const dataFlow = int.dataFlow
+  const integrationConcepts = int.concepts
+
   return (
     <section id="integrations" className="section integrations">
       <div className="container">
         <SectionHeader
-          eyebrow="Integrações & Banco de Dados"
-          title="Conectando sistemas e dados"
-          subtitle="Interesse e conhecimentos em APIs, integração entre sistemas, fluxo de dados e banco de dados."
+          eyebrow={int.eyebrow}
+          title={int.title}
+          subtitle={int.subtitle}
         />
 
         {/* Diagrama de fluxo: Sistema A → API → Tratamento → Banco → Sistema B */}
@@ -64,7 +66,7 @@ export default function Integrations() {
               <span className="dot dot--red" />
               <span className="dot dot--yellow" />
               <span className="dot dot--green" />
-              <span className="code-block-title">pipeline.js</span>
+              <span className="code-block-title">{int.codeTitle}</span>
             </div>
             <pre className="code-block-body">
               <code>{codeSnippet}</code>

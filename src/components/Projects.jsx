@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { projects } from '../data/projects'
+import { useLanguage } from '../context/LanguageContext'
 import Icon from './ui/Icon'
 import Reveal from './ui/Reveal'
 import SectionHeader from './ui/SectionHeader'
@@ -9,33 +9,34 @@ import './Projects.css'
 const isValidLink = (url) => Boolean(url) && !url.startsWith('[')
 
 export default function Projects() {
-  const categories = useMemo(
-    () => ['Todos', ...Array.from(new Set(projects.map((p) => p.category)))],
-    [],
-  )
-  const [filter, setFilter] = useState('Todos')
+  const { t } = useLanguage()
+  const p = t.projects
+  const projects = p.items
 
-  const visible = filter === 'Todos'
+  const categories = useMemo(
+    () => [p.all, ...Array.from(new Set(projects.map((item) => item.category)))],
+    [p.all, projects],
+  )
+  const [filter, setFilter] = useState(p.all)
+
+  const activeFilter = categories.includes(filter) ? filter : p.all
+  const visible = activeFilter === p.all
     ? projects
-    : projects.filter((p) => p.category === filter)
+    : projects.filter((item) => item.category === activeFilter)
 
   return (
     <section id="projects" className="section projects">
       <div className="container">
-        <SectionHeader
-          eyebrow="Projetos"
-          title="Casos práticos e experiências"
-          subtitle="Casos reais do meu dia a dia com integrações, dados e SQL."
-        />
+        <SectionHeader eyebrow={p.eyebrow} title={p.title} subtitle={p.subtitle} />
 
-        <Reveal className="project-filters" role="tablist" aria-label="Filtrar projetos por categoria">
+        <Reveal className="project-filters" role="tablist" aria-label={p.eyebrow}>
           {categories.map((cat) => (
             <button
               key={cat}
               type="button"
               role="tab"
-              aria-selected={filter === cat}
-              className={`project-filter ${filter === cat ? 'is-active' : ''}`}
+              aria-selected={activeFilter === cat}
+              className={`project-filter ${activeFilter === cat ? 'is-active' : ''}`}
               onClick={() => setFilter(cat)}
             >
               {cat}
@@ -51,7 +52,7 @@ export default function Projects() {
               className={`card project-card ${project.featured ? 'is-featured' : ''}`}
               delay={index * 60}
             >
-              {project.featured && <span className="project-featured">Destaque</span>}
+              {project.featured && <span className="project-featured">{p.featured}</span>}
 
               <div className="project-head">
                 <span className="project-category">{project.category}</span>
@@ -62,7 +63,7 @@ export default function Projects() {
                     </a>
                   )}
                   {isValidLink(project.demo) && (
-                    <a href={project.demo} target="_blank" rel="noopener noreferrer" aria-label={`Demonstração: ${project.title}`}>
+                    <a href={project.demo} target="_blank" rel="noopener noreferrer" aria-label={`${p.demo}: ${project.title}`}>
                       <Icon name="external" size={18} />
                     </a>
                   )}
@@ -73,12 +74,12 @@ export default function Projects() {
               <p className="project-description">{project.description}</p>
 
               <p className="project-objective">
-                <span className="project-label">Objetivo</span>
+                <span className="project-label">{p.objectiveLabel}</span>
                 {project.objective}
               </p>
 
               <div className="project-features">
-                <span className="project-label">Funcionalidades</span>
+                <span className="project-label">{p.featuresLabel}</span>
                 <ul>
                   {project.features.map((feature) => (
                     <li key={feature}>
@@ -99,18 +100,18 @@ export default function Projects() {
                 {isValidLink(project.github) ? (
                   <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-cta">
                     <Icon name="github" size={16} />
-                    Ver código
+                    {p.viewCode}
                   </a>
                 ) : (
                   <span className="project-cta project-cta--disabled">
                     <Icon name="github" size={16} />
-                    Em breve
+                    {p.soon}
                   </span>
                 )}
                 {isValidLink(project.demo) && (
                   <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-cta">
                     <Icon name="external" size={16} />
-                    Demonstração
+                    {p.demo}
                   </a>
                 )}
               </div>

@@ -1,17 +1,21 @@
-import { spaces } from '../data/spaces'
+import { useLanguage } from '../context/LanguageContext'
 import Icon from './ui/Icon'
 import Reveal from './ui/Reveal'
 import SectionHeader from './ui/SectionHeader'
 import './Spaces.css'
 
 export default function Spaces() {
+  const { t } = useLanguage()
+  const sp = t.spaces
+  const spaces = sp.items
+
   return (
     <section id="spaces" className="section spaces">
       <div className="container">
         <SectionHeader
-          eyebrow="Espaços"
-          title="Áreas de projetos"
-          subtitle="Atalhos para os espaços onde desenvolvo experimentos: jogos simples e ferramentas do dia a dia."
+          eyebrow={sp.eyebrow}
+          title={sp.title}
+          subtitle={sp.subtitle}
         />
 
         <div className="spaces-grid">
@@ -40,7 +44,7 @@ export default function Spaces() {
               </div>
 
               <span className="space-go" aria-hidden="true">
-                Acessar
+                {sp.access}
                 <Icon name={space.external ? 'external' : 'arrowRight'} size={18} />
               </span>
             </Reveal>

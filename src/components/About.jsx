@@ -1,22 +1,27 @@
 import { profile } from '../data/profile'
+import { useLanguage } from '../context/LanguageContext'
 import Icon from './ui/Icon'
 import Reveal from './ui/Reveal'
 import SectionHeader from './ui/SectionHeader'
 import './About.css'
 
 export default function About() {
+  const { t } = useLanguage()
+  const about = t.about
+  const paragraphs = about.paragraphs.map((p) => p.replace('{age}', profile.age))
+
   return (
     <section id="about" className="section about">
       <div className="container">
         <SectionHeader
-          eyebrow="Sobre mim"
-          title="Quem sou e para onde caminho"
-          subtitle="Um pouco de quem eu sou e do que me move na tecnologia."
+          eyebrow={about.eyebrow}
+          title={about.title}
+          subtitle={about.subtitle}
         />
 
         <div className="about-grid">
           <Reveal className="about-text">
-            {profile.about.map((paragraph, i) => (
+            {paragraphs.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
 
@@ -33,9 +38,9 @@ export default function About() {
               <div className="about-card-icon">
                 <Icon name="rocket" size={20} />
               </div>
-              <h3>Objetivos profissionais</h3>
+              <h3>{about.objectivesTitle}</h3>
               <ul className="about-list">
-                {profile.objectives.map((item) => (
+                {about.objectives.map((item) => (
                   <li key={item}>
                     <Icon name="check" size={16} />
                     {item}
@@ -48,9 +53,9 @@ export default function About() {
               <div className="about-card-icon">
                 <Icon name="sparkles" size={20} />
               </div>
-              <h3>Interesses em tecnologia</h3>
+              <h3>{about.interestsTitle}</h3>
               <div className="about-chips">
-                {profile.interests.map((item) => (
+                {about.interests.map((item) => (
                   <span key={item} className="chip">{item}</span>
                 ))}
               </div>

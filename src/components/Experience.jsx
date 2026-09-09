@@ -1,25 +1,22 @@
-import { timeline } from '../data/experience'
+import { useLanguage } from '../context/LanguageContext'
 import Icon, { timelineIconMap } from './ui/Icon'
 import Reveal from './ui/Reveal'
 import SectionHeader from './ui/SectionHeader'
 import './Experience.css'
 
-const typeLabels = {
-  work: 'Experiência',
-  education: 'Formação',
-  course: 'Curso',
-  certification: 'Certificação',
-  project: 'Projeto',
-}
-
 export default function Experience() {
+  const { t } = useLanguage()
+  const exp = t.experience
+  const timeline = exp.items
+  const typeLabels = exp.typeLabels
+
   return (
     <section id="experience" className="section experience">
       <div className="container">
         <SectionHeader
-          eyebrow="Experiência & Formação"
-          title="Minha trajetória"
-          subtitle="Formação, certificações e experiências profissionais."
+          eyebrow={exp.eyebrow}
+          title={exp.title}
+          subtitle={exp.subtitle}
         />
 
         <div className="timeline">

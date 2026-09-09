@@ -9,6 +9,7 @@ export const navLinks = [
   { id: 'projects', label: 'Projetos' },
   { id: 'experience', label: 'Experiência' },
   { id: 'integrations', label: 'Integrações' },
+  { id: 'certificates', label: 'Certificados' },
   { id: 'spaces', label: 'Espaços' },
   { id: 'contact', label: 'Contato' },
 ]

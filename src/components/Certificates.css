@@ -1,0 +1,127 @@
+.certificates {
+  background: radial-gradient(65% 55% at 0% 0%, var(--gradient-soft), transparent 70%);
+}
+
+/* Filtros por tema */
+.cert-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 2rem;
+}
+
+.cert-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition),
+    background var(--transition);
+}
+
+.cert-filter:hover {
+  color: var(--text);
+  border-color: var(--brand-500);
+}
+
+.cert-filter.is-active {
+  color: #fff;
+  background: var(--gradient-brand);
+  border-color: transparent;
+}
+
+.cert-filter-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 0.72rem;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  color: inherit;
+}
+
+.cert-filter.is-active .cert-filter-count {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: transparent;
+}
+
+/* Grade de certificados */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.cert-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 1.2rem;
+  color: inherit;
+  transition: transform var(--transition), border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.cert-card:hover,
+.cert-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--brand-500);
+  box-shadow: var(--shadow-md);
+}
+
+.cert-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  color: var(--brand-500);
+  background: var(--gradient-soft);
+  border: 1px solid var(--border);
+}
+
+.cert-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cert-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 0.3rem;
+}
+
+.cert-theme {
+  font-size: 0.74rem;
+  color: var(--text-soft);
+}
+
+.cert-open {
+  flex-shrink: 0;
+  color: var(--text-soft);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.cert-card:hover .cert-open,
+.cert-card:focus-visible .cert-open {
+  color: var(--brand-500);
+  transform: translate(2px, -2px);
+}
+
+.cert-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}

@@ -1,25 +1,28 @@
 import { contact } from '../data/contact'
+import { useLanguage } from '../context/LanguageContext'
 import Icon from './ui/Icon'
 import Reveal from './ui/Reveal'
 import SectionHeader from './ui/SectionHeader'
 import './Contact.css'
 
 export default function Contact() {
+  const { t } = useLanguage()
+  const c = t.contact
   const primary = contact.links[0]
 
   return (
     <section id="contact" className="section contact">
       <div className="container">
         <SectionHeader
-          eyebrow="Contato"
-          title="Vamos conversar"
-          subtitle="Vamos trocar ideia sobre tecnologia, projetos e integrações. Me chame no LinkedIn."
+          eyebrow={c.eyebrow}
+          title={c.title}
+          subtitle={c.subtitle}
           align="center"
         />
 
         <Reveal className="contact-info contact-info--center">
           <p className="contact-info-text">
-            Prefiro concentrar o contato no LinkedIn. É só clicar abaixo:
+            {c.text}
           </p>
 
           <ul className="contact-links">
@@ -52,7 +55,7 @@ export default function Contact() {
               rel="noopener noreferrer"
             >
               <Icon name="linkedin" size={18} />
-              Conectar no LinkedIn
+              {c.cta}
             </a>
           )}
         </Reveal>

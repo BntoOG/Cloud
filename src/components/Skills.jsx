@@ -1,28 +1,31 @@
-import { skillCategories } from '../data/skills'
+import { useLanguage } from '../context/LanguageContext'
 import Icon from './ui/Icon'
 import Reveal from './ui/Reveal'
 import SectionHeader from './ui/SectionHeader'
 import './Skills.css'
 
-// Quantos segmentos preencher por nível (de 3).
-const levelSteps = {
-  'Básico': 1,
-  'Intermediário': 2,
-  'Avançado': 3,
-}
-
 export default function Skills() {
+  const { t } = useLanguage()
+  const skills = t.skills
+
+  // Mapeia o rótulo de nível (localizado) para a quantidade de segmentos.
+  const stepsByLevel = {
+    [skills.levels.basico]: 1,
+    [skills.levels.intermediario]: 2,
+    [skills.levels.avancado]: 3,
+  }
+
   return (
     <section id="skills" className="section skills">
       <div className="container">
         <SectionHeader
-          eyebrow="Tecnologias & Conhecimentos"
-          title="Ferramentas com as quais trabalho e estudo"
-          subtitle="Conhecimentos organizados por área, com o nível de proficiência em cada um."
+          eyebrow={skills.eyebrow}
+          title={skills.title}
+          subtitle={skills.subtitle}
         />
 
         <div className="skills-grid">
-          {skillCategories.map((category, index) => (
+          {skills.categories.map((category, index) => (
             <Reveal
               key={category.id}
               className="card skill-card"
@@ -37,7 +40,7 @@ export default function Skills() {
 
               <ul className="skill-items">
                 {category.items.map((item) => {
-                  const steps = levelSteps[item.level]
+                  const steps = stepsByLevel[item.level]
                   return (
                     <li key={item.name} className="skill-item">
                       <div className="skill-item-top">
@@ -50,7 +53,7 @@ export default function Skills() {
                         <div
                           className="skill-segments"
                           role="img"
-                          aria-label={`${item.name}: nível ${item.level}`}
+                          aria-label={`${item.name}: ${item.level}`}
                         >
                           {[1, 2, 3].map((n) => (
                             <span
