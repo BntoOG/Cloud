@@ -11,12 +11,14 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ChatAssistant from './components/ChatAssistant'
 import GalaxyBackground from './components/GalaxyBackground'
+import IntroSplash from './components/IntroSplash'
 import { useLanguage } from './context/LanguageContext'
 
 export default function App() {
   const { t } = useLanguage()
   return (
     <>
+      <IntroSplash />
       <GalaxyBackground />
       <a href="#main" className="skip-link">{t.a11y.skip}</a>
       <Navbar />

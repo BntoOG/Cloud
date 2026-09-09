@@ -1,0 +1,180 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.65s ease, transform 0.65s ease;
+  overflow: hidden;
+}
+
+/* Brilho sutil de fundo (eco do tema galáxia) */
+.intro::before {
+  content: '';
+  position: absolute;
+  width: 90vmax;
+  height: 90vmax;
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.18),
+    rgba(168, 85, 247, 0.08) 40%,
+    transparent 70%
+  );
+  animation: intro-glow 2.4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.intro.is-leaving {
+  opacity: 0;
+  transform: translateY(-10px) scale(1.02);
+  pointer-events: none;
+}
+
+.intro-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.intro-logo {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 0.6rem;
+  border-radius: 26px;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--gradient-brand);
+  box-shadow: 0 20px 50px -18px rgba(99, 102, 241, 0.9);
+  animation: intro-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.intro-name {
+  font-size: clamp(1.5rem, 5vw, 2.4rem);
+  font-weight: 800;
+  animation: intro-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.18s;
+}
+
+.intro-tagline {
+  color: var(--text-muted);
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  max-width: 36ch;
+  animation: intro-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.32s;
+}
+
+.intro-bar {
+  margin-top: 1.4rem;
+  width: 200px;
+  max-width: 60vw;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  overflow: hidden;
+  animation: intro-up 0.6s ease both;
+  animation-delay: 0.4s;
+}
+
+.intro-bar-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+  background: var(--gradient-brand);
+  transform-origin: left;
+  animation: intro-load 2s ease-in-out both;
+  animation-delay: 0.35s;
+}
+
+.intro-skip {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.intro-skip:hover {
+  color: var(--brand-500);
+  border-color: var(--brand-500);
+}
+
+@keyframes intro-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.7) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes intro-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes intro-load {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes intro-glow {
+  from {
+    opacity: 0.6;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Acessibilidade: menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .intro.is-leaving {
+    transition: opacity 0.3s ease;
+    transform: none;
+  }
+  .intro::before,
+  .intro-logo,
+  .intro-name,
+  .intro-tagline,
+  .intro-bar,
+  .intro-bar-fill {
+    animation: none;
+  }
+  .intro-bar {
+    display: none;
+  }
+}
