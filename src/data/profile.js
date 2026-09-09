@@ -8,7 +8,7 @@ export const profile = {
   name: 'Eduardo Bento da Silva',
   role: 'Analista de Integração · Integrações & Banco de Dados',
   location: 'São Paulo - SP',
-  available: true, // true = mostra o selo "Disponível para oportunidades"
+  available: false, // true = mostra o selo "Disponível para oportunidades"
 
   // Data de nascimento (AAAA-MM-DD). A idade é calculada a partir daqui.
   birthDate: '2003-07-24',

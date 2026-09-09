@@ -67,6 +67,24 @@
         text-align: center; color: var(--text-muted);
       }
       .section-title { margin-top: 3rem; font-size: 1.4rem; }
+
+      .card.tool {
+        text-decoration: none; color: inherit; cursor: pointer;
+        transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      }
+      .card.tool:hover {
+        transform: translateY(-5px);
+        border-color: var(--brand);
+        box-shadow: 0 16px 40px -18px rgba(99, 102, 241, 0.9);
+      }
+      .tool-emoji { font-size: 2rem; }
+      .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: auto; }
+      .mini-tag {
+        font-size: 0.72rem; font-weight: 600; color: var(--brand);
+        background: rgba(99, 102, 241, 0.12); border: 1px solid var(--border);
+        padding: 0.15rem 0.5rem; border-radius: 999px;
+      }
+      .open { color: var(--brand); font-weight: 600; font-size: 0.9rem; margin-top: 0.4rem; }
     </style>
   </head>
   <body>
@@ -91,9 +109,20 @@
 
       <h2 class="section-title">Minhas ferramentas</h2>
       <div class="grid">
-        <!-- Duplique um card destes para cada ferramenta nova. -->
+        <!-- Duplique um card <a class="card tool"> destes para cada ferramenta nova. -->
+        <a class="card tool" href="./json-formatter.html">
+          <span class="tool-emoji" aria-hidden="true">🧩</span>
+          <h3>Formatador &amp; Validador de JSON</h3>
+          <p>Formata, minifica e valida JSON no navegador, apontando linha e coluna do erro. Útil no dia a dia de integrações.</p>
+          <span class="tag-row">
+            <span class="mini-tag">JavaScript</span>
+            <span class="mini-tag">JSON</span>
+          </span>
+          <span class="open">Abrir ferramenta &rarr;</span>
+        </a>
+
         <div class="card placeholder">
-          <p>Em breve a primeira ferramenta aparece aqui. 🛠️</p>
+          <p>Mais ferramentas chegando. 🛠️</p>
         </div>
       </div>
     </div>

@@ -2,8 +2,9 @@
  * Tecnologias e conhecimentos, organizados por categoria.
  *
  * COMO EDITAR:
- * - "level" (0 a 100) é uma auto-avaliação e controla a barra de proficiência.
- *   Ajuste os valores como preferir, ou remova o campo para ocultar a barra.
+ * - "level" define o nível e controla o indicador de proficiência.
+ *   Valores aceitos: 'Básico' | 'Intermediário' | 'Avançado'.
+ *   Remova o campo "level" para ocultar o indicador (ex.: item em andamento).
  */
 export const skillCategories = [
   {
@@ -11,13 +12,13 @@ export const skillCategories = [
     title: 'Integrações & APIs',
     icon: 'plug',
     items: [
-      { name: 'Integração entre sistemas', level: 75 },
-      { name: 'APIs REST', level: 75 },
-      { name: 'APIs SOAP', level: 70 },
-      { name: 'JSON', level: 80 },
-      { name: 'XML', level: 75 },
-      { name: 'Transactions', level: 70 },
-      { name: 'Análise de logs de integração', level: 75 },
+      { name: 'Integração entre sistemas', level: 'Intermediário' },
+      { name: 'APIs REST', level: 'Intermediário' },
+      { name: 'APIs SOAP', level: 'Intermediário' },
+      { name: 'JSON', level: 'Avançado' },
+      { name: 'XML', level: 'Intermediário' },
+      { name: 'Transactions', level: 'Intermediário' },
+      { name: 'Análise de logs de integração', level: 'Intermediário' },
     ],
   },
   {
@@ -25,10 +26,10 @@ export const skillCategories = [
     title: 'Banco de Dados',
     icon: 'database',
     items: [
-      { name: 'SQL', level: 78 },
-      { name: 'SQL Server', level: 75 },
-      { name: 'Oracle', level: 65 },
-      { name: 'Elaboração de queries', level: 78 },
+      { name: 'SQL', level: 'Avançado' },
+      { name: 'SQL Server', level: 'Intermediário' },
+      { name: 'Oracle', level: 'Básico' },
+      { name: 'Elaboração de queries', level: 'Avançado' },
     ],
   },
   {
@@ -36,8 +37,8 @@ export const skillCategories = [
     title: 'Automação & Scripts',
     icon: 'code',
     items: [
-      { name: 'PowerShell', level: 70 },
-      { name: 'Automação de verificações', level: 68 },
+      { name: 'PowerShell', level: 'Intermediário' },
+      { name: 'Automação de verificações', level: 'Intermediário' },
     ],
   },
   {
@@ -45,9 +46,9 @@ export const skillCategories = [
     title: 'Análise de Dados',
     icon: 'transform',
     items: [
-      { name: 'Validação de dados', level: 75 },
-      { name: 'Investigação de inconsistências', level: 75 },
-      { name: 'Verificação de informações', level: 72 },
+      { name: 'Validação de dados', level: 'Intermediário' },
+      { name: 'Investigação de inconsistências', level: 'Intermediário' },
+      { name: 'Verificação de informações', level: 'Intermediário' },
     ],
   },
   {
@@ -55,11 +56,11 @@ export const skillCategories = [
     title: 'Ferramentas',
     icon: 'tool',
     items: [
-      { name: 'Postman', level: 72 },
-      { name: 'ServiceNow', level: 70 },
-      { name: 'Jira Service Desk', level: 65 },
-      { name: 'Microsoft 365', level: 70 },
-      { name: 'Windows 10/11', level: 80 },
+      { name: 'Postman', level: 'Intermediário' },
+      { name: 'ServiceNow', level: 'Intermediário' },
+      { name: 'Jira Service Desk', level: 'Básico' },
+      { name: 'Microsoft 365', level: 'Intermediário' },
+      { name: 'Windows 10/11', level: 'Avançado' },
     ],
   },
   {
@@ -67,8 +68,8 @@ export const skillCategories = [
     title: 'Metodologias & Boas Práticas',
     icon: 'award',
     items: [
-      { name: 'ITIL 4', level: 65 },
-      { name: 'Suporte técnico N2', level: 78 },
+      { name: 'ITIL 4', level: 'Básico' },
+      { name: 'Suporte técnico N2', level: 'Avançado' },
     ],
   },
   {
@@ -76,7 +77,7 @@ export const skillCategories = [
     title: 'Idiomas & Formação',
     icon: 'sparkles',
     items: [
-      { name: 'Inglês intermediário', level: 60 },
+      { name: 'Inglês intermediário', level: 'Intermediário' },
       { name: 'Análise e Desenv. de Sistemas (cursando)' },
     ],
   },

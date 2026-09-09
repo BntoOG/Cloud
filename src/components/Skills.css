@@ -53,34 +53,30 @@
   font-weight: 500;
 }
 
-.skill-percent {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-soft);
+.skill-level {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--brand-500);
+  white-space: nowrap;
 }
 
-.skill-bar {
-  height: 7px;
+.skill-segments {
+  display: flex;
+  gap: 5px;
+}
+
+.skill-segment {
+  height: 6px;
+  flex: 1;
   border-radius: 999px;
   background: var(--surface-strong);
   border: 1px solid var(--border);
-  overflow: hidden;
 }
 
-.skill-bar-fill {
-  display: block;
-  height: 100%;
-  width: var(--level);
-  border-radius: 999px;
+.skill-segment.is-filled {
   background: var(--gradient-brand);
-  transform-origin: left;
-  animation: grow-bar 1s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes grow-bar {
-  from {
-    transform: scaleX(0);
-  }
+  border-color: transparent;
 }
 
 @media (max-width: 900px) {

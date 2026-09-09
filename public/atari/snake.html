@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake · Atari — Eduardo Bento</title>
+    <meta name="description" content="Jogo Snake feito em JavaScript puro, jogável no navegador." />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <style>
+      :root {
+        --bg: #0b1020;
+        --bg-elev: #121933;
+        --border: rgba(255, 255, 255, 0.09);
+        --text: #eef1fb;
+        --text-muted: #a6adc8;
+        --brand: #6366f1;
+        --accent: #a855f7;
+        --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem 3rem;
+      }
+      .back {
+        align-self: flex-start;
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        color: var(--text-muted); font-size: 0.9rem; font-weight: 600;
+        text-decoration: none; transition: color 0.2s;
+      }
+      .back:hover { color: var(--brand); }
+      h1 { font-size: 1.8rem; margin: 1rem 0 0.25rem; }
+      .sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
+      .hud {
+        display: flex; gap: 1.5rem; margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+      }
+      .hud b { color: var(--brand); }
+      .stage {
+        position: relative;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--bg-elev);
+        padding: 12px;
+        box-shadow: 0 20px 50px -20px rgba(99, 102, 241, 0.6);
+      }
+      canvas { display: block; border-radius: 8px; background: #0a0e1c; touch-action: none; }
+      .overlay {
+        position: absolute; inset: 12px;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 0.75rem; text-align: center;
+        background: rgba(10, 14, 28, 0.82);
+        border-radius: 8px; backdrop-filter: blur(2px);
+      }
+      .overlay.hidden { display: none; }
+      .overlay h2 { font-size: 1.4rem; }
+      .overlay p { color: var(--text-muted); font-size: 0.9rem; max-width: 34ch; }
+      .btn {
+        margin-top: 0.5rem;
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        background: var(--gradient); color: #fff;
+        font-weight: 600; font-size: 0.95rem;
+        border: none; border-radius: 10px; padding: 0.6rem 1.3rem;
+        cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+      }
+      .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -10px rgba(99,102,241,0.9); }
+      .hint { margin-top: 1.25rem; color: var(--text-muted); font-size: 0.82rem; text-align: center; }
+      .pad {
+        margin-top: 1.25rem;
+        display: grid;
+        grid-template-columns: repeat(3, 56px);
+        grid-template-rows: repeat(2, 56px);
+        gap: 8px;
+        justify-content: center;
+      }
+      .pad button {
+        background: var(--bg-elev); border: 1px solid var(--border);
+        border-radius: 12px; color: var(--text); font-size: 1.3rem;
+        cursor: pointer; transition: background 0.15s, border-color 0.15s;
+      }
+      .pad button:active { background: rgba(99,102,241,0.25); border-color: var(--brand); }
+      .pad .up { grid-column: 2; grid-row: 1; }
+      .pad .left { grid-column: 1; grid-row: 2; }
+      .pad .down { grid-column: 2; grid-row: 2; }
+      .pad .right { grid-column: 3; grid-row: 2; }
+      @media (min-width: 720px) { .pad { display: none; } }
+    </style>
+  </head>
+  <body>
+    <a class="back" href="./index.html">&larr; Voltar para o Atari</a>
+
+    <h1>🐍 Snake</h1>
+    <p class="sub">JavaScript puro, sem bibliotecas. Setas, WASD ou o direcional na tela.</p>
+
+    <div class="hud">
+      <span>Pontos: <b id="score">0</b></span>
+      <span>Recorde: <b id="best">0</b></span>
+    </div>
+
+    <div class="stage">
+      <canvas id="game" width="400" height="400"></canvas>
+      <div class="overlay" id="overlay">
+        <h2 id="ov-title">Snake</h2>
+        <p id="ov-text">Coma os pontos, cresça e não bata em si mesmo.</p>
+        <button class="btn" id="startBtn">Jogar</button>
+      </div>
+    </div>
+
+    <div class="pad" aria-label="Controles direcionais">
+      <button class="up" data-dir="up" aria-label="Cima">▲</button>
+      <button class="left" data-dir="left" aria-label="Esquerda">◀</button>
+      <button class="down" data-dir="down" aria-label="Baixo">▼</button>
+      <button class="right" data-dir="right" aria-label="Direita">▶</button>
+    </div>
+
+    <p class="hint">Dica: o jogo acelera conforme você pontua. Pressione espaço para pausar.</p>
+
+    <script>
+      const canvas = document.getElementById('game')
+      const ctx = canvas.getContext('2d')
+      const scoreEl = document.getElementById('score')
+      const bestEl = document.getElementById('best')
+      const overlay = document.getElementById('overlay')
+      const ovTitle = document.getElementById('ov-title')
+      const ovText = document.getElementById('ov-text')
+      const startBtn = document.getElementById('startBtn')
+
+      const GRID = 20
+      const CELLS = canvas.width / GRID // 20x20
+      const BEST_KEY = 'snake-best'
+
+      let snake, dir, nextDir, food, score, speed, loopId, running, paused
+
+      bestEl.textContent = localStorage.getItem(BEST_KEY) || 0
+
+      function reset() {
+        snake = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }]
+        dir = { x: 1, y: 0 }
+        nextDir = { x: 1, y: 0 }
+        score = 0
+        speed = 130
+        placeFood()
+        scoreEl.textContent = score
+      }
+
+      function placeFood() {
+        do {
+          food = {
+            x: Math.floor(Math.random() * CELLS),
+            y: Math.floor(Math.random() * CELLS),
+          }
+        } while (snake.some((s) => s.x === food.x && s.y === food.y))
+      }
+
+      function start() {
+        reset()
+        overlay.classList.add('hidden')
+        running = true
+        paused = false
+        clearInterval(loopId)
+        loopId = setInterval(tick, speed)
+      }
+
+      function gameOver() {
+        running = false
+        clearInterval(loopId)
+        const best = Math.max(score, Number(localStorage.getItem(BEST_KEY) || 0))
+        localStorage.setItem(BEST_KEY, best)
+        bestEl.textContent = best
+        ovTitle.textContent = 'Fim de jogo'
+        ovText.textContent = `Você fez ${score} ponto${score === 1 ? '' : 's'}. Bora de novo?`
+        startBtn.textContent = 'Jogar de novo'
+        overlay.classList.remove('hidden')
+      }
+
+      function tick() {
+        if (paused) return
+        dir = nextDir
+        const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y }
+
+        // colisão com parede ou com o próprio corpo
+        if (
+          head.x < 0 || head.x >= CELLS ||
+          head.y < 0 || head.y >= CELLS ||
+          snake.some((s) => s.x === head.x && s.y === head.y)
+        ) {
+          return gameOver()
+        }
+
+        snake.unshift(head)
+
+        if (head.x === food.x && head.y === food.y) {
+          score++
+          scoreEl.textContent = score
+          placeFood()
+          // acelera a cada 5 pontos
+          if (score % 5 === 0 && speed > 60) {
+            speed -= 12
+            clearInterval(loopId)
+            loopId = setInterval(tick, speed)
+          }
+        } else {
+          snake.pop()
+        }
+
+        draw()
+      }
+
+      function draw() {
+        ctx.fillStyle = '#0a0e1c'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+        // comida
+        ctx.fillStyle = '#a855f7'
+        roundRect(food.x * GRID, food.y * GRID, GRID, GRID, 6)
+
+        // cobra
+        snake.forEach((s, i) => {
+          ctx.fillStyle = i === 0 ? '#818cf8' : '#6366f1'
+          roundRect(s.x * GRID + 1, s.y * GRID + 1, GRID - 2, GRID - 2, 5)
+        })
+      }
+
+      function roundRect(x, y, w, h, r) {
+        ctx.beginPath()
+        ctx.moveTo(x + r, y)
+        ctx.arcTo(x + w, y, x + w, y + h, r)
+        ctx.arcTo(x + w, y + h, x, y + h, r)
+        ctx.arcTo(x, y + h, x, y, r)
+        ctx.arcTo(x, y, x + w, y, r)
+        ctx.closePath()
+        ctx.fill()
+      }
+
+      function setDir(x, y) {
+        // impede inverter 180°
+        if (dir.x === -x && dir.y === -y) return
+        nextDir = { x, y }
+      }
+
+      const keyMap = {
+        ArrowUp: [0, -1], w: [0, -1], W: [0, -1],
+        ArrowDown: [0, 1], s: [0, 1], S: [0, 1],
+        ArrowLeft: [-1, 0], a: [-1, 0], A: [-1, 0],
+        ArrowRight: [1, 0], d: [1, 0], D: [1, 0],
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ' && running) {
+          e.preventDefault()
+          paused = !paused
+          return
+        }
+        const m = keyMap[e.key]
+        if (m) {
+          e.preventDefault()
+          setDir(m[0], m[1])
+        }
+      })
+
+      const dirMap = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }
+      document.querySelectorAll('.pad button').forEach((b) => {
+        b.addEventListener('click', () => {
+          const m = dirMap[b.dataset.dir]
+          if (m && running) setDir(m[0], m[1])
+        })
+      })
+
+      startBtn.addEventListener('click', start)
+      draw()
+    </script>
+  </body>
+</html>

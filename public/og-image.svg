@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b1020" />
+      <stop offset="1" stop-color="#121933" />
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1" />
+      <stop offset="1" stop-color="#a855f7" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.15" r="0.6">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.35" />
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+
+  <!-- moldura -->
+  <rect x="40" y="40" width="1120" height="550" rx="28" fill="none" stroke="#ffffff" stroke-opacity="0.09" />
+
+  <!-- selo </> -->
+  <g transform="translate(96, 104)">
+    <rect width="88" height="88" rx="22" fill="url(#brand)" />
+    <g transform="translate(24, 30)" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <polyline points="26 4 40 15 26 26" />
+      <polyline points="14 4 0 15 14 26" />
+    </g>
+  </g>
+
+  <text x="212" y="150" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="26" font-weight="600" fill="#a6adc8" letter-spacing="2">PORTFÓLIO · TECNOLOGIA DA INFORMAÇÃO</text>
+
+  <text x="96" y="300" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="76" font-weight="800" fill="#eef1fb">Eduardo Bento da Silva</text>
+
+  <text x="96" y="372" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="40" font-weight="600" fill="url(#brand)">Analista de Integração</text>
+
+  <text x="96" y="428" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="27" font-weight="400" fill="#a6adc8">Faço sistemas diferentes conversarem entre si.</text>
+
+  <!-- tags -->
+  <g font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="600" fill="#c7cce0">
+    <g transform="translate(96, 486)">
+      <rect width="150" height="52" rx="26" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12" />
+      <text x="75" y="34" text-anchor="middle">REST / SOAP</text>
+    </g>
+    <g transform="translate(262, 486)">
+      <rect width="96" height="52" rx="26" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12" />
+      <text x="48" y="34" text-anchor="middle">JSON</text>
+    </g>
+    <g transform="translate(374, 486)">
+      <rect width="88" height="52" rx="26" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12" />
+      <text x="44" y="34" text-anchor="middle">XML</text>
+    </g>
+    <g transform="translate(478, 486)">
+      <rect width="80" height="52" rx="26" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12" />
+      <text x="40" y="34" text-anchor="middle">SQL</text>
+    </g>
+    <g transform="translate(574, 486)">
+      <rect width="168" height="52" rx="26" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12" />
+      <text x="84" y="34" text-anchor="middle">PowerShell</text>
+    </g>
+  </g>
+</svg>

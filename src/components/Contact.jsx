@@ -13,7 +13,7 @@ export default function Contact() {
         <SectionHeader
           eyebrow="Contato"
           title="Vamos conversar"
-          subtitle="Aberto a oportunidades. Me chame no LinkedIn."
+          subtitle="Vamos trocar ideia sobre tecnologia, projetos e integrações. Me chame no LinkedIn."
           align="center"
         />
 

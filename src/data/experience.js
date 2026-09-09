@@ -12,7 +12,7 @@ export const timeline = [
     place: 'Apdata',
     period: 'Atual',
     description:
-      'Suporte às integrações do Global Antares (sistema de RH da Apdata) com os sistemas dos clientes. Analiso APIs REST e SOAP, valido JSON e XML, acompanho transactions e uso SQL e PowerShell para investigar e resolver os erros de integração.',
+      'Garanto que o Global Antares (sistema de RH da Apdata) troque dados com os sistemas dos clientes sem falhas. Analiso APIs REST e SOAP, valido JSON e XML e acompanho transactions ponta a ponta — quando um dado não bate, uso SQL para achar a causa e PowerShell para automatizar as checagens que antes eram manuais.',
     tags: ['REST / SOAP', 'JSON', 'XML', 'PowerShell', 'SQL', 'Transactions', 'Integrações'],
   },
   {
@@ -22,7 +22,7 @@ export const timeline = [
     place: 'Telemática Sistemas Inteligentes',
     period: '03/2025 - 2025',
     description:
-      'Suporte N2 com foco em análise e validação de dados via SQL Server. Investiguei inconsistências, analisei logs de integração e elaborei queries para resolver incidentes críticos.',
+      'Atuei no suporte N2 investigando inconsistências de dados em SQL Server. Elaborei queries e analisei logs de integração para chegar à raiz de incidentes críticos e apoiar a correção dos registros afetados.',
     tags: ['SQL Server', 'Integrações', 'ServiceNow', 'Suporte N2'],
   },
   {
@@ -71,7 +71,7 @@ export const timeline = [
     place: 'Decoratta Comercial LTDA',
     period: '08/2023 - 03/2025',
     description:
-      'Gestão de inventário, separação de pedidos para envio nacional e operação de máquinas, mantendo o estoque organizado e os processos logísticos em dia.',
+      'Trajetória anterior à TI. Rotina de processos com atenção a detalhe e organização — controle de inventário e separação de pedidos para envio nacional, mantendo o estoque e a logística em dia.',
     tags: [],
   },
   {
@@ -81,7 +81,7 @@ export const timeline = [
     place: 'Allox Teleatendimento LTDA',
     period: '05/2022 - 11/2022',
     description:
-      'Liderança de equipe com foco em metas de vendas, acompanhando a performance do time para garantir os resultados.',
+      'Trajetória anterior à TI. Liderei uma equipe orientada a metas, acompanhando indicadores de performance — base para o trabalho analítico e sob pressão que faço hoje.',
     tags: [],
   },
 ]

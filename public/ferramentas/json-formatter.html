@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formatador de JSON · Ferramentas — Eduardo Bento</title>
+    <meta name="description" content="Formate, valide e minifique JSON direto no navegador." />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <style>
+      :root {
+        --bg: #0b1020;
+        --bg-elev: #121933;
+        --border: rgba(255, 255, 255, 0.09);
+        --text: #eef1fb;
+        --text-muted: #a6adc8;
+        --brand: #6366f1;
+        --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        --ok: #34d399;
+        --err: #f87171;
+        --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg); color: var(--text);
+        min-height: 100vh; padding: 1.5rem 1rem 3rem;
+      }
+      .wrap { max-width: 1100px; margin-inline: auto; }
+      .back {
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        color: var(--text-muted); font-size: 0.9rem; font-weight: 600;
+        text-decoration: none; transition: color 0.2s;
+      }
+      .back:hover { color: var(--brand); }
+      h1 { font-size: 1.8rem; margin: 1rem 0 0.25rem; }
+      .sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+      .toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; align-items: center; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        background: var(--gradient); color: #fff; font-weight: 600; font-size: 0.9rem;
+        border: none; border-radius: 10px; padding: 0.55rem 1.1rem; cursor: pointer;
+        transition: transform 0.15s, box-shadow 0.2s;
+      }
+      .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -12px rgba(99,102,241,0.9); }
+      .btn.ghost { background: var(--bg-elev); border: 1px solid var(--border); color: var(--text); }
+      .indent { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.85rem; }
+      select { background: var(--bg-elev); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.6rem; font-family: inherit; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .panel { display: flex; flex-direction: column; }
+      .panel label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
+      textarea {
+        width: 100%; min-height: 420px; resize: vertical;
+        background: #0a0e1c; color: var(--text); border: 1px solid var(--border);
+        border-radius: 12px; padding: 1rem; font-family: var(--mono); font-size: 0.85rem;
+        line-height: 1.6; tab-size: 2;
+      }
+      textarea:focus { outline: none; border-color: var(--brand); }
+      textarea[readonly] { color: #c7cce0; }
+      .status {
+        margin-top: 0.75rem; padding: 0.7rem 1rem; border-radius: 10px;
+        font-size: 0.88rem; font-family: var(--mono); display: none;
+      }
+      .status.show { display: block; }
+      .status.ok { background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52,211,153,0.4); color: var(--ok); }
+      .status.err { background: rgba(248, 113, 113, 0.1); border: 1px solid rgba(248,113,113,0.4); color: var(--err); }
+      @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } textarea { min-height: 240px; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="./index.html">&larr; Voltar para Ferramentas</a>
+
+      <h1>🧩 Formatador &amp; Validador de JSON</h1>
+      <p class="sub">Cole um JSON, formate com indentação, minifique ou valide. Tudo no navegador — nada é enviado a lugar nenhum.</p>
+
+      <div class="toolbar">
+        <button class="btn" id="format">Formatar</button>
+        <button class="btn ghost" id="minify">Minificar</button>
+        <button class="btn ghost" id="validate">Validar</button>
+        <button class="btn ghost" id="copy">Copiar saída</button>
+        <button class="btn ghost" id="clear">Limpar</button>
+        <button class="btn ghost" id="sample">Exemplo</button>
+        <span class="indent">
+          Indentação:
+          <select id="indentSize">
+            <option value="2">2 espaços</option>
+            <option value="4">4 espaços</option>
+            <option value="tab">Tab</option>
+          </select>
+        </span>
+      </div>
+
+      <div class="grid">
+        <div class="panel">
+          <label for="input">Entrada</label>
+          <textarea id="input" placeholder='{"exemplo": true, "itens": [1, 2, 3]}' spellcheck="false"></textarea>
+        </div>
+        <div class="panel">
+          <label for="output">Saída</label>
+          <textarea id="output" readonly placeholder="O resultado aparece aqui..." spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <div class="status" id="status"></div>
+    </div>
+
+    <script>
+      const input = document.getElementById('input')
+      const output = document.getElementById('output')
+      const status = document.getElementById('status')
+      const indentSel = document.getElementById('indentSize')
+
+      function getIndent() {
+        const v = indentSel.value
+        return v === 'tab' ? '\t' : Number(v)
+      }
+
+      function showStatus(msg, ok) {
+        status.textContent = msg
+        status.className = 'status show ' + (ok ? 'ok' : 'err')
+      }
+
+      function parse() {
+        const text = input.value.trim()
+        if (!text) {
+          showStatus('Cole um JSON na entrada primeiro.', false)
+          return { error: true }
+        }
+        try {
+          return { data: JSON.parse(text) }
+        } catch (e) {
+          // tenta extrair a posição do erro pra ajudar
+          const m = /position (\d+)/.exec(e.message)
+          let extra = ''
+          if (m) {
+            const pos = Number(m[1])
+            const before = text.slice(0, pos)
+            const line = before.split('\n').length
+            const col = pos - before.lastIndexOf('\n')
+            extra = ` (linha ${line}, coluna ${col})`
+          }
+          showStatus('JSON inválido: ' + e.message + extra, false)
+          return { error: true }
+        }
+      }
+
+      function countInfo(obj) {
+        const s = JSON.stringify(obj)
+        const keys = (s.match(/"[^"]*":/g) || []).length
+        return `${s.length} caracteres · ${keys} chave(s)`
+      }
+
+      document.getElementById('format').addEventListener('click', () => {
+        const r = parse()
+        if (r.error) return
+        output.value = JSON.stringify(r.data, null, getIndent())
+        showStatus('JSON válido e formatado. ' + countInfo(r.data), true)
+      })
+
+      document.getElementById('minify').addEventListener('click', () => {
+        const r = parse()
+        if (r.error) return
+        output.value = JSON.stringify(r.data)
+        showStatus('JSON minificado. ' + countInfo(r.data), true)
+      })
+
+      document.getElementById('validate').addEventListener('click', () => {
+        const r = parse()
+        if (r.error) return
+        showStatus('JSON válido. ' + countInfo(r.data), true)
+      })
+
+      document.getElementById('copy').addEventListener('click', async () => {
+        if (!output.value) { showStatus('Não há saída para copiar.', false); return }
+        try {
+          await navigator.clipboard.writeText(output.value)
+          showStatus('Saída copiada para a área de transferência.', true)
+        } catch {
+          output.select()
+          document.execCommand('copy')
+          showStatus('Saída copiada.', true)
+        }
+      })
+
+      document.getElementById('clear').addEventListener('click', () => {
+        input.value = ''
+        output.value = ''
+        status.className = 'status'
+      })
+
+      document.getElementById('sample').addEventListener('click', () => {
+        input.value = JSON.stringify({
+          cliente: { id: 1024, nome: 'ACME Ltda', ativo: true },
+          integracao: { protocolo: 'REST', formato: 'JSON', endpoints: ['/clientes', '/pedidos'] },
+          pedidos: [
+            { id: 'PED-001', total: 1999.9, itens: 3 },
+            { id: 'PED-002', total: 49.5, itens: 1 }
+          ]
+        })
+        output.value = ''
+        showStatus('Exemplo carregado. Clique em Formatar.', true)
+      })
+    </script>
+  </body>
+</html>

@@ -20,6 +20,13 @@ export const contact = {
       href: 'https://www.linkedin.com/in/eduardobento269683326',
       handle: '/in/eduardobento269683326',
     },
+    {
+      id: 'github',
+      label: 'GitHub',
+      icon: 'github',
+      href: 'https://github.com/BntoOG',
+      handle: '@BntoOG',
+    },
   ],
 }
 

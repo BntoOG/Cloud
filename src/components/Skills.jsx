@@ -4,6 +4,13 @@ import Reveal from './ui/Reveal'
 import SectionHeader from './ui/SectionHeader'
 import './Skills.css'
 
+// Quantos segmentos preencher por nível (de 3).
+const levelSteps = {
+  'Básico': 1,
+  'Intermediário': 2,
+  'Avançado': 3,
+}
+
 export default function Skills() {
   return (
     <section id="skills" className="section skills">
@@ -11,7 +18,7 @@ export default function Skills() {
         <SectionHeader
           eyebrow="Tecnologias & Conhecimentos"
           title="Ferramentas com as quais trabalho e estudo"
-          subtitle="Conhecimentos organizados por área. Itens marcados como [preencher] são espaços reservados para atualização."
+          subtitle="Conhecimentos organizados por área, com o nível de proficiência em cada um."
         />
 
         <div className="skills-grid">
@@ -29,31 +36,33 @@ export default function Skills() {
               </div>
 
               <ul className="skill-items">
-                {category.items.map((item) => (
-                  <li key={item.name} className="skill-item">
-                    <div className="skill-item-top">
-                      <span className="skill-name">{item.name}</span>
-                      {typeof item.level === 'number' && (
-                        <span className="skill-percent">{item.level}%</span>
-                      )}
-                    </div>
-                    {typeof item.level === 'number' && (
-                      <div
-                        className="skill-bar"
-                        role="progressbar"
-                        aria-valuenow={item.level}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        aria-label={item.name}
-                      >
-                        <span
-                          className="skill-bar-fill"
-                          style={{ '--level': `${item.level}%` }}
-                        />
+                {category.items.map((item) => {
+                  const steps = levelSteps[item.level]
+                  return (
+                    <li key={item.name} className="skill-item">
+                      <div className="skill-item-top">
+                        <span className="skill-name">{item.name}</span>
+                        {item.level && (
+                          <span className="skill-level">{item.level}</span>
+                        )}
                       </div>
-                    )}
-                  </li>
-                ))}
+                      {steps && (
+                        <div
+                          className="skill-segments"
+                          role="img"
+                          aria-label={`${item.name}: nível ${item.level}`}
+                        >
+                          {[1, 2, 3].map((n) => (
+                            <span
+                              key={n}
+                              className={`skill-segment ${n <= steps ? 'is-filled' : ''}`}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </li>
+                  )
+                })}
               </ul>
             </Reveal>
           ))}
