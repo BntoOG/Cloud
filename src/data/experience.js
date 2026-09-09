@@ -12,7 +12,7 @@ export const timeline = [
     place: 'Apdata',
     period: 'Atual',
     description:
-      'Atuo no suporte às integrações do Global Antares (G.A.), o sistema de RH da Apdata, garantindo que a troca de dados com os sistemas dos clientes aconteça sem falhas. Testo e analiso APIs REST e SOAP no Postman, valido payloads em JSON e XML, trato codificações em Base64 e acompanho transactions ponta a ponta. Cuido de transferências de arquivos via SFTP e, quando um dado não bate, investigo com SQL e automatizo as checagens repetitivas com scripts em PowerShell e .bat.',
+      'Atuo no suporte às integrações de um sistema corporativo de RH com os sistemas dos clientes, garantindo que a troca de dados aconteça sem falhas. Testo e analiso APIs REST e SOAP no Postman, valido payloads em JSON e XML, trato codificações em Base64 e acompanho o fluxo das transações ponta a ponta. Cuido de transferências de arquivos via SFTP e, quando um dado não bate, investigo com SQL e automatizo as checagens repetitivas com scripts em PowerShell e .bat.',
     tags: ['Suporte a Integrações', 'REST / SOAP', 'Postman', 'JSON', 'XML', 'Base64', 'SFTP', 'Transactions', 'SQL', 'PowerShell', 'Batch (.bat)'],
   },
   {

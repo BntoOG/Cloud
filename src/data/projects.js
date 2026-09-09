@@ -17,7 +17,7 @@ export const projects = [
     category: 'Integração',
     featured: true,
     description:
-      'Suporte às integrações do Global Antares (G.A.) com os sistemas dos clientes: teste de REST e SOAP no Postman, validação de JSON, XML e Base64, transferência de arquivos via SFTP e acompanhamento das transactions.',
+      'Suporte às integrações de um sistema corporativo de RH com os sistemas dos clientes: teste de REST e SOAP no Postman, validação de JSON, XML e Base64, transferência de arquivos via SFTP e acompanhamento das transações.',
     objective: 'Manter a troca de dados entre sistemas confiável e sem falhas.',
     features: [
       'Teste e análise de integrações REST e SOAP no Postman',

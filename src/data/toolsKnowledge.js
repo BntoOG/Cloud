@@ -23,7 +23,7 @@ export const toolsKnowledge = [
     keywords: ['integracao', 'integracoes', 'integrar', 'integra'],
     answer:
       'Integração é fazer dois sistemas diferentes trocarem dados entre si de forma automática. ' +
-      'É o meu foco na Apdata: cuido das integrações do Global Antares com os sistemas dos clientes. ' +
+      'É o meu foco na Apdata: cuido das integrações de um sistema corporativo de RH com os sistemas dos clientes. ' +
       'Na prática, analiso o fluxo (Sistema A → API → tratamento dos dados → banco → Sistema B), ' +
       'testo as chamadas REST e SOAP, valido o que vai e volta em JSON/XML e acompanho as transactions ' +
       'para garantir que o dado chegou certo do outro lado. Quando algo falha, uso logs e SQL para achar a causa.',
@@ -44,7 +44,7 @@ export const toolsKnowledge = [
     keywords: ['rest', 'restful'],
     answer:
       'REST é o estilo de API mais usado hoje, normalmente trocando dados em JSON via HTTP. ' +
-      'Uso bastante para analisar e testar as integrações do Global Antares: acompanho as requisições, ' +
+      'Uso bastante para analisar e testar as integrações do dia a dia: acompanho as requisições, ' +
       'confiro os códigos de resposta e valido o conteúdo que é enviado e recebido.',
   },
   {

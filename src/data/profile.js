@@ -32,7 +32,7 @@ export const profile = {
   get about() {
     return [
       `Tenho ${this.age} anos, sou de São Paulo e gosto de entender como os sistemas se conectam por trás das telas.`,
-      'Hoje trabalho na Apdata dando suporte às integrações do Global Antares (G.A.): testo APIs REST e SOAP no Postman, valido JSON e XML, trato dados em Base64, acompanho transactions e cuido de transferências de arquivos via SFTP. Uso SQL para achar onde os dados saíram do lugar e automatizo o que é repetitivo com PowerShell e scripts .bat.',
+      'Hoje atuo na Apdata dando suporte às integrações de um sistema corporativo de RH com os sistemas dos clientes: testo APIs REST e SOAP no Postman, valido JSON e XML, trato dados em Base64, acompanho o fluxo das transações e cuido de transferências de arquivos via SFTP. Uso SQL para achar onde os dados saíram do lugar e automatizo o que é repetitivo com PowerShell e scripts .bat.',
       'Estou terminando a graduação em Análise e Desenvolvimento de Sistemas e quero crescer em integração, desenvolvimento e banco de dados.',
     ]
   },

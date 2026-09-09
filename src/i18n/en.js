@@ -37,7 +37,7 @@ export const en = {
     subtitle: 'A bit about who I am and what drives me in technology.',
     paragraphs: [
       "I'm {age} years old, from São Paulo, and I enjoy understanding how systems connect behind the screens.",
-      'Today I work at Apdata supporting the integrations of Global Antares (G.A.): I test REST and SOAP APIs in Postman, validate JSON and XML, handle Base64 data, track transactions and manage file transfers over SFTP. I use SQL to find where the data went wrong and automate repetitive work with PowerShell and .bat scripts.',
+      'Today I work at Apdata supporting the integrations of a corporate HR system with client systems: I test REST and SOAP APIs in Postman, validate JSON and XML, handle Base64 data, track transaction flows and manage file transfers over SFTP. I use SQL to find where the data went wrong and automate repetitive work with PowerShell and .bat scripts.',
       "I'm finishing my degree in Systems Analysis and Development and I want to grow in integration, development and databases.",
     ],
     objectivesTitle: 'Professional goals',
@@ -159,7 +159,7 @@ export const en = {
         category: 'Integration',
         featured: true,
         description:
-          'Support for Global Antares (G.A.) integrations with client systems: testing REST and SOAP in Postman, validating JSON, XML and Base64, transferring files over SFTP and tracking transactions.',
+          'Support for a corporate HR system\u2019s integrations with client systems: testing REST and SOAP in Postman, validating JSON, XML and Base64, transferring files over SFTP and tracking transaction flows.',
         objective: 'Keep data exchange between systems reliable and failure-free.',
         features: [
           'Testing and analysis of REST and SOAP integrations in Postman',
@@ -214,7 +214,7 @@ export const en = {
       {
         id: 'exp-apdata', type: 'work', title: 'Integration Analyst', place: 'Apdata', period: 'Current',
         description:
-          'I support the integrations of Global Antares (G.A.), Apdata\u2019s HR system, making sure data exchange with client systems runs without failures. I test and analyze REST and SOAP APIs in Postman, validate JSON and XML payloads, handle Base64 encodings and track transactions end to end. I manage file transfers over SFTP and, when data does not add up, I investigate with SQL and automate repetitive checks with PowerShell and .bat scripts.',
+          'I support the integrations of a corporate HR system with client systems, making sure data exchange runs without failures. I test and analyze REST and SOAP APIs in Postman, validate JSON and XML payloads, handle Base64 encodings and track transaction flows end to end. I manage file transfers over SFTP and, when data does not add up, I investigate with SQL and automate repetitive checks with PowerShell and .bat scripts.',
         tags: ['Integration Support', 'REST / SOAP', 'Postman', 'JSON', 'XML', 'Base64', 'SFTP', 'Transactions', 'SQL', 'PowerShell', 'Batch (.bat)'],
       },
       {
