@@ -95,6 +95,18 @@ export const en = {
         ],
       },
       {
+        id: 'languages', title: 'Web Development & Languages', icon: 'code',
+        items: [
+          { name: 'HTML', level: 'Intermediate' },
+          { name: 'CSS', level: 'Intermediate' },
+          { name: 'JavaScript', level: 'Intermediate' },
+          { name: 'React', level: 'Basic' },
+          { name: 'Node.js', level: 'Basic' },
+          { name: 'Python', level: 'Basic' },
+          { name: 'Java', level: 'Basic' },
+        ],
+      },
+      {
         id: 'data', title: 'Data Analysis', icon: 'transform',
         items: [
           { name: 'Data validation', level: 'Intermediate' },

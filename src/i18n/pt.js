@@ -97,6 +97,18 @@ export const pt = {
         ],
       },
       {
+        id: 'languages', title: 'Desenvolvimento Web & Linguagens', icon: 'code',
+        items: [
+          { name: 'HTML', level: 'Intermediário' },
+          { name: 'CSS', level: 'Intermediário' },
+          { name: 'JavaScript', level: 'Intermediário' },
+          { name: 'React', level: 'Básico' },
+          { name: 'Node.js', level: 'Básico' },
+          { name: 'Python', level: 'Básico' },
+          { name: 'Java', level: 'Básico' },
+        ],
+      },
+      {
         id: 'data', title: 'Análise de Dados', icon: 'transform',
         items: [
           { name: 'Validação de dados', level: 'Intermediário' },

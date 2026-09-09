@@ -10,12 +10,14 @@ export const profile = {
   location: 'São Paulo - SP',
   available: false, // true = mostra o selo "Disponível para oportunidades"
 
-  // Data de nascimento (AAAA-MM-DD). A idade é calculada a partir daqui.
-  birthDate: '2003-07-24',
+  // Ano e mês de nascimento (a idade é calculada a partir daqui).
+  // Por privacidade, NÃO guardamos o dia exato do nascimento.
+  birthYear: 2003,
+  birthMonth: 7, // 1-12
 
   // Idade calculada em tempo real — sempre atualizada.
   get age() {
-    return calcularIdade(this.birthDate)
+    return calcularIdade(this.birthYear, this.birthMonth)
   },
 
   // Frase de destaque exibida no topo (Hero)
@@ -59,19 +61,16 @@ export const profile = {
 }
 
 /**
- * Calcula a idade a partir de uma data de nascimento (AAAA-MM-DD).
- * Considera se o aniversário já aconteceu no ano corrente.
+ * Calcula a idade a partir do ano e mês de nascimento.
+ * Não usa o dia exato (privacidade); a idade só pode ficar "1 a mais"
+ * durante o mês do aniversário, o que é aceitável e não vaza a data completa.
  */
-function calcularIdade(dataNascimento) {
-  const nascimento = new Date(dataNascimento)
+function calcularIdade(ano, mes) {
   const hoje = new Date()
-
-  let idade = hoje.getFullYear() - nascimento.getFullYear()
-  const mes = hoje.getMonth() - nascimento.getMonth()
-
-  if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+  let idade = hoje.getFullYear() - ano
+  // getMonth() é 0-11; "mes" recebido é 1-12.
+  if (hoje.getMonth() + 1 < mes) {
     idade -= 1
   }
-
   return idade
 }

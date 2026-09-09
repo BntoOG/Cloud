@@ -7,36 +7,6 @@
  */
 export const certificates = [
   {
-    "num": 1,
-    "title": "Certificado de Politica de Segurança da Informação",
-    "theme": "Segurança & Governança",
-    "file": "1-certificado-de-politica-de-seguranca-da-informacao.pdf"
-  },
-  {
-    "num": 2,
-    "title": "Política de Privacidade e Proteção de Dados - 2026",
-    "theme": "Segurança & Governança",
-    "file": "2-politica-de-privacidade-e-protecao-de-dados-2026.pdf"
-  },
-  {
-    "num": 3,
-    "title": "Aviso de Privacidade Interno (colaboradores) - 2026",
-    "theme": "Segurança & Governança",
-    "file": "3-aviso-de-privacidade-interno-colaboradores-2026.pdf"
-  },
-  {
-    "num": 4,
-    "title": "Conceitos Básicos de Segurança da Informação - 2026",
-    "theme": "Segurança & Governança",
-    "file": "4-conceitos-basicos-de-seguranca-da-informacao-2026.pdf"
-  },
-  {
-    "num": 5,
-    "title": "Lei Geral de Proteção de Dados (LGPD) - 2026",
-    "theme": "Segurança & Governança",
-    "file": "5-lei-geral-de-protecao-de-dados-lgpd-2026.pdf"
-  },
-  {
     "num": 6,
     "title": "Certificado ApDesigner",
     "theme": "Desenvolvimento",
@@ -47,18 +17,6 @@ export const certificates = [
     "title": "Certificado APSQL",
     "theme": "Dados & BI",
     "file": "7-certificado-apsql.pdf"
-  },
-  {
-    "num": 8,
-    "title": "Política de Conformidade Estatutária, Regulatória e Contratual - 2026",
-    "theme": "Segurança & Governança",
-    "file": "8-politica-de-conformidade-estatutaria-regulatoria-e-contratual-2026.pdf"
-  },
-  {
-    "num": 9,
-    "title": "Procedimento Gestão de Mudanças (GMUD) - Global Antares - 2026",
-    "theme": "Segurança & Governança",
-    "file": "9-procedimento-gestao-de-mudancas-gmud-global-antares-2026.pdf"
   },
   {
     "num": 10,
@@ -457,24 +415,6 @@ export const certificates = [
     "file": "74-desenvolvimento-de-sistemas-python.pdf"
   },
   {
-    "num": 75,
-    "title": "Política de Manuseio de Dados Pessoais - 2026",
-    "theme": "Segurança & Governança",
-    "file": "75-politica-de-manuseio-de-dados-pessoais-2026.pdf"
-  },
-  {
-    "num": 76,
-    "title": "Procedimento Gestão de Incidentes - 2026",
-    "theme": "Segurança & Governança",
-    "file": "76-procedimento-gestao-de-incidentes-2026.pdf"
-  },
-  {
-    "num": 77,
-    "title": "Plano de Continuidade de Negócios (PCN) - 2026",
-    "theme": "Segurança & Governança",
-    "file": "77-plano-de-continuidade-de-negocios-pcn-2026.pdf"
-  },
-  {
     "num": 78,
     "title": "Java para Iniciantes",
     "theme": "Desenvolvimento",
@@ -483,7 +423,6 @@ export const certificates = [
 ]
 
 export const certificateThemes = [
-  'Segurança & Governança',
   'Desenvolvimento',
   'Dados & BI',
   'Inteligência Artificial',
