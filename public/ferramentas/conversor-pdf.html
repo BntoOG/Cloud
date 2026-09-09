@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imagens para PDF · Ferramentas — Eduardo Bento</title>
+    <meta name="description" content="Converta imagens (JPG, PNG, WEBP) em um PDF, direto no navegador." />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <style>
+      :root {
+        --bg: #0b1020;
+        --bg-elev: #121933;
+        --border: rgba(255, 255, 255, 0.09);
+        --text: #eef1fb;
+        --text-muted: #a6adc8;
+        --brand: #6366f1;
+        --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        --ok: #34d399;
+        --err: #f87171;
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg); color: var(--text);
+        min-height: 100vh; padding: 1.5rem 1rem 3rem;
+      }
+      .wrap { max-width: 900px; margin-inline: auto; }
+      .back {
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        color: var(--text-muted); font-size: 0.9rem; font-weight: 600;
+        text-decoration: none; transition: color 0.2s;
+      }
+      .back:hover { color: var(--brand); }
+      h1 { font-size: 1.8rem; margin: 1rem 0 0.25rem; }
+      .sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+      .drop {
+        border: 2px dashed var(--border); border-radius: 16px;
+        background: var(--bg-elev); padding: 2.5rem 1.5rem; text-align: center;
+        cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      }
+      .drop:hover, .drop.drag { border-color: var(--brand); background: rgba(99,102,241,0.08); }
+      .drop strong { color: var(--brand); }
+      .drop p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.4rem; }
+      .drop .emoji { font-size: 2.2rem; }
+
+      .options {
+        display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;
+        margin: 1.25rem 0; padding: 1rem; background: var(--bg-elev);
+        border: 1px solid var(--border); border-radius: 12px;
+      }
+      .field { display: flex; flex-direction: column; gap: 0.3rem; }
+      .field label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+      select, input[type="range"] {
+        background: var(--bg); color: var(--text); border: 1px solid var(--border);
+        border-radius: 8px; padding: 0.45rem 0.6rem; font-family: inherit; font-size: 0.9rem;
+      }
+      .qval { font-size: 0.8rem; color: var(--brand); font-weight: 600; }
+      label.check { flex-direction: row; align-items: center; gap: 0.45rem; font-size: 0.85rem; color: var(--text); }
+
+      .list { display: grid; gap: 0.6rem; margin: 1.25rem 0; }
+      .item {
+        display: flex; align-items: center; gap: 0.9rem;
+        background: var(--bg-elev); border: 1px solid var(--border);
+        border-radius: 12px; padding: 0.6rem 0.8rem;
+      }
+      .item img { width: 54px; height: 54px; object-fit: cover; border-radius: 8px; background: #0a0e1c; }
+      .item .meta { flex: 1; min-width: 0; }
+      .item .name { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .item .dim { font-size: 0.78rem; color: var(--text-muted); }
+      .item .ctrls { display: flex; gap: 0.3rem; }
+      .item .ctrls button {
+        width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border);
+        background: var(--bg); color: var(--text); cursor: pointer; font-size: 0.9rem;
+        transition: border-color 0.15s, color 0.15s;
+      }
+      .item .ctrls button:hover { border-color: var(--brand); color: var(--brand); }
+      .item .ctrls button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+      .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        background: var(--gradient); color: #fff; font-weight: 600; font-size: 0.95rem;
+        border: none; border-radius: 10px; padding: 0.65rem 1.4rem; cursor: pointer;
+        transition: transform 0.15s, box-shadow 0.2s;
+      }
+      .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -12px rgba(99,102,241,0.9); }
+      .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+      .btn.ghost { background: var(--bg-elev); border: 1px solid var(--border); color: var(--text); }
+
+      .status {
+        margin-top: 1rem; padding: 0.7rem 1rem; border-radius: 10px; font-size: 0.88rem; display: none;
+      }
+      .status.show { display: block; }
+      .status.ok { background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52,211,153,0.4); color: var(--ok); }
+      .status.err { background: rgba(248, 113, 113, 0.1); border: 1px solid rgba(248,113,113,0.4); color: var(--err); }
+
+      .privacy { margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted); text-align: center; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="./index.html">&larr; Voltar para Ferramentas</a>
+
+      <h1>🖼️ Imagens para PDF</h1>
+      <p class="sub">Junte várias imagens (JPG, PNG, WEBP, GIF) em um único PDF. Ordene as páginas, escolha o tamanho e baixe. Tudo roda no seu navegador — nenhuma imagem é enviada.</p>
+
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="Adicionar imagens">
+        <div class="emoji" aria-hidden="true">📄</div>
+        <div>Arraste imagens aqui ou <strong>clique para escolher</strong></div>
+        <p>Você pode adicionar várias de uma vez.</p>
+      </div>
+      <input type="file" id="file" accept="image/*" multiple hidden />
+
+      <div class="options">
+        <div class="field">
+          <label for="pageSize">Tamanho da página</label>
+          <select id="pageSize">
+            <option value="a4">A4</option>
+            <option value="letter">Carta (Letter)</option>
+            <option value="fit">Do tamanho da imagem</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="orient">Orientação</label>
+          <select id="orient">
+            <option value="auto">Automática</option>
+            <option value="portrait">Retrato</option>
+            <option value="landscape">Paisagem</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="margin">Margem</label>
+          <select id="margin">
+            <option value="0">Sem margem</option>
+            <option value="18">Pequena</option>
+            <option value="36" selected>Média</option>
+            <option value="54">Grande</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="quality">Qualidade (<span class="qval" id="qval">92%</span>)</label>
+          <input type="range" id="quality" min="50" max="100" value="92" />
+        </div>
+        <label class="check field"><input type="checkbox" id="keepAlpha" /> Manter transparência (PNG)</label>
+      </div>
+
+      <div class="list" id="list"></div>
+
+      <div class="actions">
+        <button class="btn" id="generate" disabled>Gerar PDF</button>
+        <button class="btn ghost" id="clear" disabled>Limpar tudo</button>
+        <span id="count" class="dim" style="color: var(--text-muted); font-size: 0.85rem;"></span>
+      </div>
+
+      <div class="status" id="status"></div>
+
+      <p class="privacy">🔒 Processamento 100% local. As imagens não saem do seu dispositivo.</p>
+    </div>
+
+    <script src="./vendor/jspdf.umd.min.js"></script>
+    <script>
+      const dropEl = document.getElementById('drop')
+      const fileEl = document.getElementById('file')
+      const listEl = document.getElementById('list')
+      const genBtn = document.getElementById('generate')
+      const clearBtn = document.getElementById('clear')
+      const statusEl = document.getElementById('status')
+      const countEl = document.getElementById('count')
+      const qualityEl = document.getElementById('quality')
+      const qvalEl = document.getElementById('qval')
+
+      let images = [] // { id, name, dataUrl, w, h }
+      let uid = 0
+
+      qualityEl.addEventListener('input', () => { qvalEl.textContent = qualityEl.value + '%' })
+
+      function showStatus(msg, ok) {
+        statusEl.textContent = msg
+        statusEl.className = 'status show ' + (ok ? 'ok' : 'err')
+      }
+
+      function refresh() {
+        listEl.innerHTML = ''
+        images.forEach((img, i) => {
+          const row = document.createElement('div')
+          row.className = 'item'
+          row.innerHTML = `
+            <img src="${img.dataUrl}" alt="" />
+            <div class="meta">
+              <div class="name">${i + 1}. ${escapeHtml(img.name)}</div>
+              <div class="dim">${img.w} × ${img.h}px</div>
+            </div>
+            <div class="ctrls">
+              <button data-act="up" ${i === 0 ? 'disabled' : ''} aria-label="Mover para cima">↑</button>
+              <button data-act="down" ${i === images.length - 1 ? 'disabled' : ''} aria-label="Mover para baixo">↓</button>
+              <button data-act="del" aria-label="Remover">✕</button>
+            </div>`
+          row.querySelector('[data-act="up"]').addEventListener('click', () => move(i, -1))
+          row.querySelector('[data-act="down"]').addEventListener('click', () => move(i, 1))
+          row.querySelector('[data-act="del"]').addEventListener('click', () => remove(i))
+          listEl.appendChild(row)
+        })
+        const has = images.length > 0
+        genBtn.disabled = !has
+        clearBtn.disabled = !has
+        countEl.textContent = has ? `${images.length} imagem(ns)` : ''
+      }
+
+      function escapeHtml(s) {
+        return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+      }
+
+      function move(i, dir) {
+        const j = i + dir
+        if (j < 0 || j >= images.length) return
+        ;[images[i], images[j]] = [images[j], images[i]]
+        refresh()
+      }
+      function remove(i) { images.splice(i, 1); refresh() }
+
+      function addFiles(files) {
+        const imgs = [...files].filter((f) => f.type.startsWith('image/'))
+        if (!imgs.length) { showStatus('Selecione arquivos de imagem.', false); return }
+        let pending = imgs.length
+        imgs.forEach((file) => {
+          const reader = new FileReader()
+          reader.onload = (e) => {
+            const image = new Image()
+            image.onload = () => {
+              images.push({ id: ++uid, name: file.name, dataUrl: e.target.result, w: image.naturalWidth, h: image.naturalHeight })
+              if (--pending === 0) { refresh(); showStatus(`${imgs.length} imagem(ns) adicionada(s).`, true) }
+            }
+            image.onerror = () => { if (--pending === 0) refresh() }
+            image.src = e.target.result
+          }
+          reader.readAsDataURL(file)
+        })
+      }
+
+      // eventos de drop / seleção
+      dropEl.addEventListener('click', () => fileEl.click())
+      dropEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileEl.click() } })
+      fileEl.addEventListener('change', () => { addFiles(fileEl.files); fileEl.value = '' })
+      ;['dragenter', 'dragover'].forEach((ev) =>
+        dropEl.addEventListener(ev, (e) => { e.preventDefault(); dropEl.classList.add('drag') })
+      )
+      ;['dragleave', 'drop'].forEach((ev) =>
+        dropEl.addEventListener(ev, (e) => { e.preventDefault(); dropEl.classList.remove('drag') })
+      )
+      dropEl.addEventListener('drop', (e) => { if (e.dataTransfer?.files) addFiles(e.dataTransfer.files) })
+
+      clearBtn.addEventListener('click', () => { images = []; refresh(); statusEl.className = 'status' })
+
+      // reencoda a imagem via canvas (normaliza formato: JPEG ou PNG)
+      function encode(img, usePng, quality) {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.w
+        canvas.height = img.h
+        const ctx = canvas.getContext('2d')
+        if (!usePng) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, img.w, img.h) }
+        const el = new Image()
+        el.src = img.dataUrl
+        ctx.drawImage(el, 0, 0, img.w, img.h)
+        return usePng
+          ? { data: canvas.toDataURL('image/png'), fmt: 'PNG' }
+          : { data: canvas.toDataURL('image/jpeg', quality), fmt: 'JPEG' }
+      }
+
+      genBtn.addEventListener('click', async () => {
+        if (!images.length) return
+        if (!window.jspdf || !window.jspdf.jsPDF) { showStatus('Biblioteca de PDF não carregou. Recarregue a página.', false); return }
+        genBtn.disabled = true
+        showStatus('Gerando PDF...', true)
+
+        try {
+          const { jsPDF } = window.jspdf
+          const sizeOpt = document.getElementById('pageSize').value
+          const orientOpt = document.getElementById('orient').value
+          const margin = Number(document.getElementById('margin').value)
+          const usePng = document.getElementById('keepAlpha').checked
+          const quality = Number(qualityEl.value) / 100
+
+          const PAGE = { a4: [595.28, 841.89], letter: [612, 792] }
+          let doc = null
+
+          images.forEach((img, idx) => {
+            const enc = encode(img, usePng, quality)
+            let pageW, pageH, orientation
+
+            if (sizeOpt === 'fit') {
+              // página do tamanho da imagem (em pt = px aqui) + margem
+              orientation = img.w >= img.h ? 'landscape' : 'portrait'
+              pageW = img.w + margin * 2
+              pageH = img.h + margin * 2
+            } else {
+              const base = PAGE[sizeOpt]
+              orientation = orientOpt === 'auto'
+                ? (img.w >= img.h ? 'landscape' : 'portrait')
+                : orientOpt
+              ;[pageW, pageH] = orientation === 'landscape'
+                ? [Math.max(base[0], base[1]), Math.min(base[0], base[1])]
+                : [Math.min(base[0], base[1]), Math.max(base[0], base[1])]
+            }
+
+            const format = [pageW, pageH]
+            if (idx === 0) {
+              doc = new jsPDF({ orientation, unit: 'pt', format })
+            } else {
+              doc.addPage(format, orientation)
+            }
+
+            const availW = pageW - margin * 2
+            const availH = pageH - margin * 2
+            const scale = Math.min(availW / img.w, availH / img.h)
+            const w = img.w * scale
+            const h = img.h * scale
+            const x = (pageW - w) / 2
+            const y = (pageH - h) / 2
+            doc.addImage(enc.data, enc.fmt, x, y, w, h)
+          })
+
+          doc.save('imagens.pdf')
+          showStatus(`PDF gerado com ${images.length} página(s). Verifique seus downloads.`, true)
+        } catch (err) {
+          showStatus('Erro ao gerar o PDF: ' + err.message, false)
+        } finally {
+          genBtn.disabled = false
+        }
+      })
+    </script>
+  </body>
+</html>
