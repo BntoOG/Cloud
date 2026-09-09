@@ -23,14 +23,14 @@ export const profile = {
 
   // Apresentação curta (Hero)
   shortBio:
-    'Analista de integração. Trabalho com APIs REST e SOAP, JSON, XML, SQL e automações em PowerShell.',
+    'Analista de integração. Trabalho com APIs REST e SOAP (Postman), JSON, XML, Base64, SFTP, SQL e automações em PowerShell e scripts .bat.',
 
   // Texto da seção "Sobre mim" (cada item vira um parágrafo).
   // Usa a idade dinâmica, então nunca fica desatualizado.
   get about() {
     return [
       `Tenho ${this.age} anos, sou de São Paulo e gosto de entender como os sistemas se conectam por trás das telas.`,
-      'Hoje trabalho na Apdata como analista de integração: acompanho APIs REST e SOAP, valido JSON e XML, investigo transactions e uso SQL para achar onde os dados saíram do lugar. Quando dá, automatizo com PowerShell.',
+      'Hoje trabalho na Apdata dando suporte às integrações do Global Antares (G.A.): testo APIs REST e SOAP no Postman, valido JSON e XML, trato dados em Base64, acompanho transactions e cuido de transferências de arquivos via SFTP. Uso SQL para achar onde os dados saíram do lugar e automatizo o que é repetitivo com PowerShell e scripts .bat.',
       'Estou terminando a graduação em Análise e Desenvolvimento de Sistemas e quero crescer em integração, desenvolvimento e banco de dados.',
     ]
   },
@@ -43,9 +43,10 @@ export const profile = {
   ],
   interests: [
     'Integração entre sistemas',
-    'APIs REST e SOAP',
+    'APIs REST e SOAP (Postman)',
+    'Transferência de arquivos (SFTP)',
     'Banco de dados e SQL',
-    'Automação com PowerShell',
+    'Automação com PowerShell e .bat',
     'Análise e validação de dados',
   ],
 

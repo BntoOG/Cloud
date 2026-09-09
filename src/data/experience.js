@@ -12,8 +12,8 @@ export const timeline = [
     place: 'Apdata',
     period: 'Atual',
     description:
-      'Garanto que o Global Antares (sistema de RH da Apdata) troque dados com os sistemas dos clientes sem falhas. Analiso APIs REST e SOAP, valido JSON e XML e acompanho transactions ponta a ponta — quando um dado não bate, uso SQL para achar a causa e PowerShell para automatizar as checagens que antes eram manuais.',
-    tags: ['REST / SOAP', 'JSON', 'XML', 'PowerShell', 'SQL', 'Transactions', 'Integrações'],
+      'Atuo no suporte às integrações do Global Antares (G.A.), o sistema de RH da Apdata, garantindo que a troca de dados com os sistemas dos clientes aconteça sem falhas. Testo e analiso APIs REST e SOAP no Postman, valido payloads em JSON e XML, trato codificações em Base64 e acompanho transactions ponta a ponta. Cuido de transferências de arquivos via SFTP e, quando um dado não bate, investigo com SQL e automatizo as checagens repetitivas com scripts em PowerShell e .bat.',
+    tags: ['Suporte a Integrações', 'REST / SOAP', 'Postman', 'JSON', 'XML', 'Base64', 'SFTP', 'Transactions', 'SQL', 'PowerShell', 'Batch (.bat)'],
   },
   {
     id: 'exp-telematica',

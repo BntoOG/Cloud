@@ -17,6 +17,8 @@ export const skillCategories = [
       { name: 'APIs SOAP', level: 'Intermediário' },
       { name: 'JSON', level: 'Avançado' },
       { name: 'XML', level: 'Intermediário' },
+      { name: 'Base64', level: 'Intermediário' },
+      { name: 'SFTP (transferência de arquivos)', level: 'Intermediário' },
       { name: 'Transactions', level: 'Intermediário' },
       { name: 'Análise de logs de integração', level: 'Intermediário' },
     ],
@@ -38,6 +40,7 @@ export const skillCategories = [
     icon: 'code',
     items: [
       { name: 'PowerShell', level: 'Intermediário' },
+      { name: 'Scripts .bat (Batch)', level: 'Básico' },
       { name: 'Automação de verificações', level: 'Intermediário' },
     ],
   },
