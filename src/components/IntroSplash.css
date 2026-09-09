@@ -66,35 +66,82 @@
   animation-delay: 0.18s;
 }
 
-.intro-tagline {
-  color: var(--text-muted);
-  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
-  max-width: 36ch;
-  animation: intro-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: 0.32s;
-}
-
-.intro-bar {
-  margin-top: 1.4rem;
-  width: 200px;
-  max-width: 60vw;
-  height: 3px;
-  border-radius: 999px;
-  background: var(--surface-strong);
-  overflow: hidden;
+/* ===== Cena da cobrinha perseguindo a maçã ===== */
+.snake-scene {
+  position: relative;
+  width: 116px;
+  height: 116px;
+  margin-top: 1.1rem;
   animation: intro-up 0.6s ease both;
-  animation-delay: 0.4s;
+  animation-delay: 0.36s;
 }
 
-.intro-bar-fill {
-  display: block;
-  height: 100%;
-  width: 100%;
-  border-radius: 999px;
-  background: var(--gradient-brand);
-  transform-origin: left;
-  animation: intro-load 2s ease-in-out both;
-  animation-delay: 0.35s;
+/* Grupo que gira: leva cobra + maçã em órbita (a cobra "persegue") */
+.snake-orbit {
+  position: absolute;
+  inset: 0;
+  animation: snake-orbit 1.5s linear infinite;
+}
+
+.snake-orbit .apple,
+.snake-orbit .seg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+}
+
+/* Maçã (círculo vermelho + folha) */
+.apple {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 35% 30%, #ff7a7a, #e11d48 70%);
+  transform: translate(-50%, -50%) rotate(0deg) translateY(-44px);
+  box-shadow: 0 0 10px rgba(225, 29, 72, 0.5);
+}
+.apple::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  background: #22c55e;
+  border-radius: 0 100% 0 100%;
+  transform: translateX(-50%) rotate(20deg);
+}
+
+/* Segmentos da cobra (verde), com tamanho decrescente atrás da cabeça */
+.seg {
+  background: linear-gradient(135deg, #34d399, #10b981);
+}
+.head {
+  width: 17px;
+  height: 17px;
+  background: linear-gradient(135deg, #6ee7b7, #10b981);
+  transform: translate(-50%, -50%) rotate(-30deg) translateY(-44px);
+  z-index: 2;
+}
+/* Olhinho da cabeça */
+.head::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 3px;
+  height: 3px;
+  background: #0b1020;
+  border-radius: 50%;
+}
+.s1 { width: 14px; height: 14px; transform: translate(-50%, -50%) rotate(-54deg) translateY(-44px); }
+.s2 { width: 12px; height: 12px; transform: translate(-50%, -50%) rotate(-76deg) translateY(-44px); opacity: 0.92; }
+.s3 { width: 10px; height: 10px; transform: translate(-50%, -50%) rotate(-96deg) translateY(-44px); opacity: 0.82; }
+.s4 { width: 8px;  height: 8px;  transform: translate(-50%, -50%) rotate(-114deg) translateY(-44px); opacity: 0.7; }
+
+@keyframes snake-orbit {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .intro-skip {
@@ -169,12 +216,8 @@
   .intro::before,
   .intro-logo,
   .intro-name,
-  .intro-tagline,
-  .intro-bar,
-  .intro-bar-fill {
+  .snake-scene,
+  .snake-orbit {
     animation: none;
-  }
-  .intro-bar {
-    display: none;
   }
 }

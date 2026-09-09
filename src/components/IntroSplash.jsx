@@ -77,10 +77,18 @@ export default function IntroSplash() {
           {initials}
         </span>
         <h1 className="intro-name">{profile.name}</h1>
-        <p className="intro-tagline">{t.hero.tagline}</p>
-        <span className="intro-bar" aria-hidden="true">
-          <span className="intro-bar-fill" />
-        </span>
+
+        {/* Cobrinha perseguindo a maçã (loop) */}
+        <div className="snake-scene" aria-hidden="true">
+          <div className="snake-orbit">
+            <span className="apple" />
+            <span className="seg head" />
+            <span className="seg s1" />
+            <span className="seg s2" />
+            <span className="seg s3" />
+            <span className="seg s4" />
+          </div>
+        </div>
       </div>
 
       <button
